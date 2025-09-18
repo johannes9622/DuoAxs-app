@@ -1,0 +1,16 @@
+{
+  "name": "duoaxs-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node src/index.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.15.0",
+    "dotenv": "^16.4.5",
+    "node-cron": "^3.0.3",
+    "pino": "^9.3.2",
+    "prisma": "^5.15.0"
+  }
+}

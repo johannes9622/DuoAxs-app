@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String?
+  passwordHash String?
+  role         Role     @default(MEMBER)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  trainer      Trainer?
+  sessions     Session[]
+  checkins     Checkin[]
+  wallet       CreditWallet?
+  topups       TopUpTransaction[]
+}
+
+model Trainer {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id])
+  payoutMode      PayoutMode @default(WEEKLY)
+  specialty       String?
+  rateCents       Int?
+  stripeAccountId String?
+  createdAt       DateTime @default(now())
+  sessions        Session[]
+}
+
+model CreditWallet {
+  userId       String   @id
+  user         User     @relation(fields: [userId], references: [id])
+  planCredits  Int      @default(0)
+  topUpCredits Int      @default(0)
+  nextResetAt  DateTime?
+  updatedAt    DateTime @updatedAt
+}
+
+model Session {
+  id         String   @id @default(cuid())
+  memberId   String
+  trainerId  String
+  gymId      String
+  priceCents Int
+  startedAt  DateTime
+  endedAt    DateTime?
+  status     SessionStatus @default(completed)
+  createdAt  DateTime @default(now())
+
+  member     User    @relation(fields: [memberId], references: [id])
+  trainer    Trainer @relation(fields: [trainerId], references: [id])
+}
+
+model Checkin {
+  id        String   @id @default(cuid())
+  userId    String
+  gymId     String
+  createdAt DateTime @default(now())
+
+  user      User @relation(fields: [userId], references: [id])
+}
+
+model TopUpTransaction {
+  id                String   @id @default(cuid())
+  userId            String
+  user              User     @relation(fields: [userId], references: [id])
+  credits           Int
+  amountCents       Int
+  providerSessionId String?  @unique
+  createdAt         DateTime @default(now())
+}
+
+enum Role {
+  MEMBER
+  TRAINER
+  ADMIN
+}
+
+enum PayoutMode {
+  INSTANT
+  WEEKLY
+  MONTHLY
+}
+
+enum SessionStatus {
+  scheduled
+  completed
+  cancelled
+}

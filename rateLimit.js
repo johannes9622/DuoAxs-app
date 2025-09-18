@@ -1,0 +1,1 @@
+export function rateLimit({windowMs=60000,max=300}={}){ const hits=new Map(); return (req,res,next)=>{ const now=Date.now(); const key=req.ip+':'+Math.floor(now/windowMs); const count=(hits.get(key)||0)+1; hits.set(key,count); if(count>max) return res.status(429).json({error:'Too many requests'}); next(); }}

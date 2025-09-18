@@ -1,0 +1,1 @@
+import { Router } from 'express'; const r=Router(); r.get('/trainers/near',(req,res)=>{ const {lat,lng}=req.query; const list=[{id:'t1',name:'Alex P.',specialty:'Strength',rateUsd:'60.00',distanceKm:1.2},{id:'t2',name:'Jamie R.',specialty:'HIIT',rateUsd:'55.00',distanceKm:2.4}]; res.json({ trainers: (lat&&lng)? list: [] });}); export default r;

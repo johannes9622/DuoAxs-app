@@ -1,0 +1,1 @@
+export default function Topup(){ return (<div className='container'><div className='header'><h1>Buy Credits</h1></div><div className='card'>Complete your purchase via Stripe Checkout. Your credits will be added automatically after payment.</div></div>); }

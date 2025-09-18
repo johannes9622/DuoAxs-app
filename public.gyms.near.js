@@ -1,0 +1,1 @@
+import { Router } from 'express'; const r=Router(); r.get('/gyms/near',(req,res)=>{ const {lat,lng}=req.query; const gyms=[{id:'g1',name:'Flex Loft',tier:'Core',distanceKm:1.1,isOpenNow:true},{id:'g2',name:'Iron Base',tier:'Elite',distanceKm:3.4,isOpenNow:false}]; res.json({ gyms: (lat&&lng)? gyms: [] });}); export default r;

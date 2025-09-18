@@ -1,0 +1,30 @@
+# fly.toml for DuoAxs API
+app = "duoaxs-api"
+primary_region = "iad"
+
+[build]
+  dockerfile = "apps/api/backend/Dockerfile"
+
+[env]
+  PORT = "4000"
+
+[[services]]
+  http_checks = []
+  internal_port = 4000
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 200
+    soft_limit = 150
+    type = "connections"
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+  [[services.tcp_checks]]
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"

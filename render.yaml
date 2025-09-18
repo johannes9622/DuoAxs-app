@@ -1,0 +1,43 @@
+services:
+- type: web
+  name: duoaxs-api
+  env: node
+  plan: starter
+  rootDir: apps/api/backend
+  buildCommand: |
+    npm i
+    npx prisma generate
+  startCommand: node index.js
+  envVars:
+  - key: DATABASE_URL
+    fromDatabase:
+      name: duoaxs-db
+      property: connectionString
+  - key: JWT_SECRET
+    generateValue: true
+
+- type: web
+  name: duoaxs-admin
+  env: node
+  plan: starter
+  rootDir: apps/admin
+  buildCommand: npm i && npm run build
+  startCommand: npm start
+  envVars:
+  - key: NEXT_PUBLIC_API_BASE
+    value: https://duoaxs-api.onrender.com
+
+- type: web
+  name: duoaxs-member
+  env: node
+  plan: starter
+  rootDir: apps/member
+  buildCommand: npm i && npm run build
+  startCommand: npm start
+  envVars:
+  - key: NEXT_PUBLIC_API_BASE
+    value: https://duoaxs-api.onrender.com
+
+databases:
+- name: duoaxs-db
+  plan: starter
