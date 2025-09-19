@@ -1,8 +1,18 @@
 // lib/auth.ts
-export function getToken() {
-  return "demo-token"; // replace with real logic later
+
+export function getToken(): string {
+  if (typeof window === 'undefined') return '';
+  return localStorage.getItem('token') || '';
 }
 
-export function isAuthenticated() {
-  return true; // placeholder
+export function setToken(t: string): void {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('token', t);
+  }
+}
+
+export function clearToken(): void {
+  if (typeof window !== 'undefined') {
+    localStorage.removeItem('token');
+  }
 }
