@@ -1,6 +1,6 @@
 // apps/member/pages/checkin.tsx
 import { useState } from 'react';
-import { getToken } from '../lib/auth';
+import { getToken } from '../../lib/auth';
 
 const API = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:4000';
 
