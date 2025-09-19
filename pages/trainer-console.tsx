@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getToken } from '../../lib/auth'; // <- adjust to ../lib/auth if file is in pages/
+import { getToken } from '../lib/auth'; // <- adjust to ../lib/auth if file is in pages/
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:4000';
 
