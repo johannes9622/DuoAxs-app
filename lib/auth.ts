@@ -16,3 +16,7 @@ export function clearToken(): void {
     localStorage.removeItem('token');
   }
 }
+
+export function isAuthenticated(): boolean {
+  return !!getToken();
+}
